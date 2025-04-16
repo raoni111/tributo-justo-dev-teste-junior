@@ -1,0 +1,14 @@
+[
+  {
+    "cnpj": "12345678000199",
+    "razao_social": "Empresa Alpha Ltda",
+    "setor": "Comércio",
+    "data_abertura": "2010-05-12"
+  },
+  {
+    "cnpj": "98765432000188",
+    "razao_social": "Beta Soluções Digitais",
+    "setor": "Tecnologia",
+    "data_abertura": "2018-09-03"
+  }
+]
