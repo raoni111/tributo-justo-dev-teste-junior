@@ -35,7 +35,7 @@ Recomendamos entregar em até **2 dias úteis** após o recebimento.
 
 ## 📧 Entrega
 
-1. Faça um **fork deste repositório** ou copie seu conteúdo para um novo repo público no seu GitHub.
+1. Faça um **fork deste repositório**.
 2. Ao finalizar, envie o link do seu repositório para: **[marcio.faria@tributojusto.com.br]** com o assunto: `Entrega Desafio Técnico – Júnior – [Seu Nome]`.
 3 - Aguarde a agenda para uma reunião online para que possa explicar sua entrega/código
 
