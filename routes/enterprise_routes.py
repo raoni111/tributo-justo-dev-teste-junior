@@ -21,15 +21,15 @@ async def get_companies():
     # Retorna uma exceção caso nao encontre uma empresa 
     if len(companies) == 0:
         raise HTTPException(
-            404,
+            status.HTTP_404_NOT_FOUND,
             {
-                "statusCode": 404,
+                "statusCode": status.HTTP_404_NOT_FOUND,
                 "message": f"Nenhuma empresa encontrada!"
             }
         )
     
     return {
-        "statusCode": 200,
+        "statusCode": status.HTTP_200_OK,
         "companies": companies
     }
 
