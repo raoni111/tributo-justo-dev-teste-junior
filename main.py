@@ -1,7 +1,6 @@
 from fastapi import FastAPI
+from routes.enterprise_routes import enterpriseRouter
 
 app = FastAPI()
 
-app.get("/")
-async def hello_word():
-    return "Hello World"
+app.include_router(enterpriseRouter)
