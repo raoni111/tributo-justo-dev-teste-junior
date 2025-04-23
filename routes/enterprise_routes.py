@@ -1,12 +1,17 @@
-from typing import Annotated
-from fastapi import APIRouter, HTTPException, Query
+
+from fastapi import APIRouter, HTTPException
 from model.enterprise import EnterpriseBaseModel
 from service.enterprise_service import EnterpriseService
 
 enterpriseRouter = APIRouter()
 
 # Rota response: retornar todas as empresas do banco de dados
-@enterpriseRouter.get("/enterprise", tags=["Enterprise"])
+@enterpriseRouter.get(
+    "/enterprise", 
+    tags=["Enterprise"], 
+    name="Retorna todas empresas do banco de dados",
+    description="Basicamente retorna todas empresas registradas no banco de dados"
+)
 async def get_companies():
     companies: list[EnterpriseBaseModel] = []
     
@@ -14,10 +19,28 @@ async def get_companies():
     
     companies = enterprise_service.get_all_companies()
     
-    return companies
+    # Retorna uma exceção caso nao encontre uma empresa 
+    if len(companies) == 0:
+        raise HTTPException(
+            404,
+            {
+                "statusCode": 404,
+                "message": f"Nenhuma empresa encontrada!"
+            }
+        )
+    
+    return {
+        "statusCode": 200,
+        "companies": companies
+    }
 
 # Route response: retorna uma empresa pelo cnpj
-@enterpriseRouter.get("/enterprise/{enterprise_cnpj}", tags=["Enterprise"], name="Retorna uma empresa pelo cpnj")
+@enterpriseRouter.get(
+    "/enterprise/{enterprise_cnpj}", 
+    tags=["Enterprise"], 
+    name="Retorna uma empresa pelo cpnj",
+    description="Filtra empresas registradas no banco de dados pelo CNPJ enviado pelo usuário. Se não encontrar uma empresa, retorna uma exceção"
+)
 async def get_enterprise_by_cnpj(enterprise_cnpj: str):
     
     enterprise: EnterpriseBaseModel = {}
@@ -36,4 +59,7 @@ async def get_enterprise_by_cnpj(enterprise_cnpj: str):
             }
         )
     
-    return enterprise
+    return {
+        "statusCode": 200,
+        "enterprise": enterprise
+    }
