@@ -36,26 +36,26 @@ async def get_companies():
 
 # Route response: retorna uma empresa pelo cnpj
 @enterpriseRouter.get(
-    "/enterprise/{enterprise_cnpj}", 
+    "/enterprise/{enterprise_CNPJ}", 
     tags=["Enterprise"], 
-    name="Retorna uma empresa pelo cpnj",
+    name="Retorna uma empresa pelo CNPJ",
     description="Filtra empresas registradas no banco de dados pelo CNPJ enviado pelo usuário. Se não encontrar uma empresa, retorna uma exceção"
 )
-async def get_enterprise_by_cnpj(enterprise_cnpj: str):
+async def get_enterprise_by_CNPJ(enterprise_CNPJ: str):
     
     enterprise: EnterpriseBaseModel = {}
     
     enterprise_service = EnterpriseService()
     
-    enterprise = enterprise_service.get_enterprise_by_cnpj(enterprise_cnpj)
+    enterprise = enterprise_service.get_enterprise_by_CNPJ(enterprise_CNPJ)
     
-    # Retorna uma exceção caso nao encontre uma empresa com o cnpj sugerido
+    # Retorna uma exceção caso nao encontre uma empresa com o CNPJ sugerido
     if not enterprise:
         raise HTTPException(
             404, 
             {
                 "statusCode": 400,
-                "message": f"Não foi possível encontrar uma empresa com o cnpj {enterprise_cnpj}"
+                "message": f"Não foi possível encontrar uma empresa com o CNPJ {enterprise_CNPJ}"
             }
         )
     
