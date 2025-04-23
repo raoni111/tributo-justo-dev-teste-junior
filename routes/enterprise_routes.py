@@ -1,5 +1,4 @@
-
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, status
 from model.enterprise import EnterpriseBaseModel
 from service.enterprise_service import EnterpriseService
 
@@ -34,7 +33,7 @@ async def get_companies():
         "companies": companies
     }
 
-# Route response: retorna uma empresa pelo cnpj
+# Route response: retorna uma empresa pelo CNPJ
 @enterpriseRouter.get(
     "/enterprise/{enterprise_CNPJ}", 
     tags=["Enterprise"], 
@@ -54,7 +53,7 @@ async def get_enterprise_by_CNPJ(enterprise_CNPJ: str):
         raise HTTPException(
             404, 
             {
-                "statusCode": 400,
+                "statusCode": 404,
                 "message": f"Não foi possível encontrar uma empresa com o CNPJ {enterprise_CNPJ}"
             }
         )
@@ -63,3 +62,31 @@ async def get_enterprise_by_CNPJ(enterprise_CNPJ: str):
         "statusCode": 200,
         "enterprise": enterprise
     }
+    
+# Router: registra as informações da empresa no banco de dados
+@enterpriseRouter.post(
+        "/enterprise",
+        tags=["Enterprise"],
+        name="Cria uma empresa no banco de dados",
+        description="A rota recebe as informações do cliente, valida os dados utilizando o EnterpriseBaseModel e, se forem válidos, cria uma empresa no banco de dados."
+    )
+def post_enterprise(enterprise_info: EnterpriseBaseModel):
+    enterprise_service = EnterpriseService()
+    
+    enterprise = enterprise_service.post_enterprise(enterprise_info)
+    
+    if not enterprise:
+        raise HTTPException(
+            status.HTTP_404_NOT_FOUND,
+            {
+                "statusCode": status.HTTP_404_NOT_FOUND,
+                "message": "Não foi possível registrar empresa"
+            }    
+        )
+    
+    return {
+        "statusCode": status.HTTP_200_OK,
+        "message": "Empresa registrada com sucesso",
+        "enterprise": enterprise
+    }
+    
