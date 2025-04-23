@@ -20,8 +20,8 @@ class EnterpriseService:
         
         return companies
     
-    # função executa uma query (SELECT WHERE) e retorna uma empresa pelo cnpj
-    def get_enterprise_by_cnpj(self, cnpj: str) -> EnterpriseBaseModel | None:
+    # função executa uma query (SELECT WHERE) e retorna uma empresa pelo CNPJ
+    def get_enterprise_by_CNPJ(self, CNPJ: str) -> EnterpriseBaseModel | None:
         enterprise: EnterpriseBaseModel | None = None
         
         with sqlite3.connect(self.database_dir) as conn:
@@ -29,7 +29,7 @@ class EnterpriseService:
             
             cursor = conn.cursor()
             
-            cursor.execute("SELECT * FROM enterprise WHERE cnpj = ?", (cnpj,))
+            cursor.execute("SELECT * FROM enterprise WHERE cnpj = ?", (CNPJ,))
             
             enterprise = cursor.fetchone()
             
