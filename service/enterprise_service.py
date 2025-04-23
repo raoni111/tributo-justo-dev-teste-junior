@@ -7,7 +7,7 @@ class EnterpriseService:
     database_dir = os.path.join(os.path.dirname(__file__), '..', 'database', 'enterprise_db.sql')
     
     # função tenta (INSERT INTO) adicionando uma empresa no banco de dados, se surgir uma exceção IntegrityError retorna uma uma mensagem de erro
-    def post_enterprise(self, enterprise: EnterpriseBaseModel):
+    def post_enterprise(self, enterprise: EnterpriseBaseModel) -> EnterpriseBaseModel | None:
         try:
             with sqlite3.connect(self.database_dir) as conn:
                 cursor = conn.cursor()
@@ -54,7 +54,6 @@ class EnterpriseService:
             cursor = conn.cursor()
             
             cursor.execute("SELECT * FROM enterprise WHERE cnpj = ?", (CNPJ,))
-            
             
             enterprise = dict(cursor.fetchone())
             
