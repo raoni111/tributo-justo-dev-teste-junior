@@ -6,5 +6,3 @@ class EnterpriseBaseModel(BaseModel):
     corporate_reason: str
     sector: str
     opening_date: str
-    
-    

@@ -1,6 +1,5 @@
 from model.enterprise import EnterpriseBaseModel
 from service.enterprise_service import EnterpriseService
-
 from fastapi import APIRouter
 
 enterpriseRouter = APIRouter()
@@ -9,6 +8,7 @@ enterpriseRouter = APIRouter()
 @enterpriseRouter.get("/enterprise", tags=["enterprise"])
 async def get_companies():
     companies: list[EnterpriseBaseModel] = []
+    
     enterprise_service = EnterpriseService()
     
     companies = enterprise_service.get_all_companies()
