@@ -38,7 +38,9 @@ class EnterpriseService:
             
             cursor.execute("SELECT * FROM enterprise")
 
-            companies = cursor.fetchall()
+            rows = cursor.fetchall()
+            
+            companies = [dict(row) for row in rows]
         
         return companies
     
