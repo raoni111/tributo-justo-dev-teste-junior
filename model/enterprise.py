@@ -1,5 +1,4 @@
 from pydantic import BaseModel, field_validator
-from dateutil.parser import parse
 from typing import Optional
 
 class EnterpriseBaseModel(BaseModel):
