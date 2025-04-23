@@ -59,4 +59,22 @@ class EnterpriseService:
             enterprise = dict(cursor.fetchone())
             
         return enterprise
+    
+    # Função executa uma query (SELECT WHERE) e retorna empresas filtrada por setor
+    def get_companies_by_sector(self, sector: str) -> list[EnterpriseBaseModel]:
+        enterprise: list[EnterpriseBaseModel] = []
+        
+        with sqlite3.connect(self.database_dir) as conn:
+            conn.row_factory = sqlite3.Row
+            
+            cursor = conn.cursor()
+            
+            cursor.execute("SELECT * FROM enterprise WHERE sector = ?", (sector,))
+            
+            rows = cursor.fetchall()
+            
+            enterprise = [dict(row) for row in rows]
+            
+        return enterprise
+        
             
