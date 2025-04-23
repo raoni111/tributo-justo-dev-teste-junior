@@ -55,7 +55,8 @@ class EnterpriseService:
             
             cursor.execute("SELECT * FROM enterprise WHERE cnpj = ?", (CNPJ,))
             
-            enterprise = cursor.fetchone()
+            
+            enterprise = dict(cursor.fetchone())
             
         return enterprise
             
