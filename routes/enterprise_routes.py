@@ -51,15 +51,15 @@ async def get_enterprise_by_CNPJ(enterprise_CNPJ: str):
     # Retorna uma exceção caso nao encontre uma empresa com o CNPJ sugerido
     if not enterprise:
         raise HTTPException(
-            404, 
+            status.HTTP_404_NOT_FOUND, 
             {
-                "statusCode": 404,
+                "statusCode": status.HTTP_404_NOT_FOUND,
                 "message": f"Não foi possível encontrar uma empresa com o CNPJ {enterprise_CNPJ}"
             }
         )
     
     return {
-        "statusCode": 200,
+        "statusCode": status.HTTP_200_OK,
         "enterprise": enterprise
     }
     
