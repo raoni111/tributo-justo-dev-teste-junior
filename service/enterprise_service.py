@@ -10,12 +10,14 @@ class EnterpriseService:
         companies: list[EnterpriseBaseModel] = []
         
         with sqlite3.connect(self.database_dir) as conn:
+            conn.row_factory = sqlite3.Row
+            
             cursor = conn.cursor()
             
             cursor.execute("SELECT * FROM enterprise")
 
             companies = cursor.fetchall()
-            
+        
         return companies
     
     # função executa uma query (SELECT WHERE) e retorna uma empresa pelo cnpj
@@ -31,9 +33,5 @@ class EnterpriseService:
             
             enterprise = cursor.fetchone()
             
-        # verifica se retornou um valor valido e transforma em um dict
-        if enterprise:
-            return dict(enterprise)
-
         return enterprise
             
