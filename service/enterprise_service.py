@@ -33,7 +33,7 @@ class EnterpriseService:
                 cursor = conn.cursor()
                 cursor.execute(
                     "DELETE FROM enterprise WHERE id == ?",
-                    (enterprise_id),
+                    (enterprise_id,),
                 )
                 
                 if cursor.rowcount == 0:
@@ -78,7 +78,18 @@ class EnterpriseService:
             
             cursor.execute("SELECT * FROM enterprise WHERE cnpj = ?", (CNPJ,))
             
-            enterprise = dict(cursor.fetchone())
+            row = cursor.fetchone()
+            
+            if row == None:
+                raise HTTPException(
+                    status.HTTP_404_NOT_FOUND, 
+                    {
+                        "statusCode": status.HTTP_404_NOT_FOUND,
+                        "message": f"Não foi possível encontrar uma empresa com o CNPJ {CNPJ}"
+                    }
+                )
+            
+            enterprise = dict(row)
             
         return enterprise
     
