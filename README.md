@@ -1,6 +1,6 @@
 # Desafio Tributo Justo
 
-Desafio feito por `Raoni oliveira quevedo`
+Desafio concluído por `Raoni oliveira quevedo`
 
 ## inicialização
 
