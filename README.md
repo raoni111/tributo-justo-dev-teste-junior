@@ -23,6 +23,11 @@ Desafio feito por `Raoni oliveira quevedo`
     ```powershell
        fastapi dev main.py
     ```
+## Teste ` PyTest `
+1. inicialize o comando no terminal
+   ```powershell
+      pytest
+   ```
 
 # Banco de Dados
 se o arquivo ` enterprise_db ` não estiver em ` ./database/enterprise_db.sql `, crie o arquivo depois use o schema a baixo para criar a tabela ` enterprise ` 
@@ -118,12 +123,23 @@ Rota busca empresas relacionada com o `setor` enviador por parâmetro pelo clien
       "statusCode": 200,
       "companies": [
          {
-            "id": 4,
-            "cnpj": "12345678000199",
-            "corporate_reason": "Empresa Alpha Ltda",
-            "sector": "Comércio",
-            "opening_date": "2010-05-12"
+            "id": int,
+            "cnpj": str,
+            "corporate_reason": str,
+            "sector": str,
+            "opening_date": str
          }
       ]
    }  
+```
+## **[DELETE]** `{api_url}/enterprise/{enterprise_id}`
+Rota deleta uma empresa no banco de dados usando o id enviado pelo cliente como referencia
+
+### Response: <span style="color:green;">200 OK</span>
+```python
+   {
+      "statusCode": 200,
+      "message": "Empresa com id 51 foi deletada",
+      "enterpriseId": str
+   }
 ```
