@@ -1,9 +1,8 @@
-from fastapi import APIRouter, HTTPException, status, Path
+from fastapi import APIRouter, HTTPException, status
 from model.enterprise import EnterpriseBaseModel
 from service.enterprise_service import EnterpriseService
 
 enterpriseRouter = APIRouter()
-
 
 # Router: registra as informações da empresa no banco de dados
 @enterpriseRouter.post(
@@ -32,6 +31,15 @@ def post_enterprise(enterprise_info: EnterpriseBaseModel):
         "enterprise": enterprise
     }
 
+# Rota: delete uma empresa baseado no id fornecido pelo cliente
+@enterpriseRouter.delete("/enterprise/{enterprise_id}")
+def delete_enterprise(enterprise_id: str):
+    enterprise_service = EnterpriseService()
+    
+    response = enterprise_service.delete_enterprise(enterprise_id)
+    
+    return response
+    
 # Rota response: retornar todas as empresas do banco de dados
 @enterpriseRouter.get(
     "/enterprise", 
@@ -69,9 +77,6 @@ async def get_companies():
     description="Filtra empresas registradas no banco de dados pelo CNPJ enviado pelo usuário. Se não encontrar uma empresa, retorna uma exceção"
 )
 async def get_enterprise_by_CNPJ(enterprise_CNPJ: str):
-    
-    enterprise: EnterpriseBaseModel = {}
-    
     enterprise_service = EnterpriseService()
     
     enterprise = enterprise_service.get_enterprise_by_CNPJ(enterprise_CNPJ)
@@ -99,6 +104,8 @@ async def get_enterprise_by_CNPJ(enterprise_CNPJ: str):
     description="Rota recebe uma (enterprise_sector) e filtra as empresas que estão registrado no banco de dados pelo setor"
 )
 async def get_enterprise_by_sector(enterprise_sector: str):
+    companies: list[EnterpriseBaseModel] = []
+    
     enterprise_service = EnterpriseService()
     
     companies = enterprise_service.get_companies_by_sector(enterprise_sector)
