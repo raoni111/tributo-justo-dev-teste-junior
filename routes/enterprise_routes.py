@@ -31,6 +31,15 @@ def post_enterprise(enterprise_info: EnterpriseBaseModel):
         "enterprise": enterprise
     }
 
+# Rota: delete uma empresa baseado no id fornecido pelo cliente
+@enterpriseRouter.delete("/enterprise/{enterprise_id}")
+def delete_enterprise(enterprise_id: str):
+    enterprise_service = EnterpriseService()
+    
+    response = enterprise_service.delete_enterprise(enterprise_id)
+    
+    return response
+    
 # Rota response: retornar todas as empresas do banco de dados
 @enterpriseRouter.get(
     "/enterprise", 
